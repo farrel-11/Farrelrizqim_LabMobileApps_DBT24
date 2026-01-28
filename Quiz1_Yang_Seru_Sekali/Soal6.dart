@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'dart:io';
-
 void main() {
   Account a = Account();
   a.depo(100);
