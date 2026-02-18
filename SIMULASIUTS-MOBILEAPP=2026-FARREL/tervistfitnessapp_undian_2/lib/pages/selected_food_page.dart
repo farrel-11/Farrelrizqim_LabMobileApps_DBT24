@@ -117,11 +117,11 @@ class _SelectedFoodPageState extends State<SelectedFoodPage> {
 
                   Row(
                     children: [
-                      _buildNutrientSmallCard('Protein', '6g', 'assets/drumstick.svg', const Color(0xFFE57373)),
+                      _buildNutrientSmallCard('Protein', '6g', 'assets/drumstick.svg'),
                       const SizedBox(width: 10),
-                      _buildNutrientSmallCard('Carbs', '0g', 'assets/wheat.svg', const Color(0xFF81C784)),
+                      _buildNutrientSmallCard('Carbs', '0g', 'assets/sawithd.png'),
                       const SizedBox(width: 10),
-                      _buildNutrientSmallCard('Fats', '4g', 'assets/avocado.svg', const Color(0xFF81C784)),
+                      _buildNutrientSmallCard('Fats', '4g', 'assets/avocado.svg'),
                     ],
                   ),
 
@@ -195,36 +195,41 @@ class _SelectedFoodPageState extends State<SelectedFoodPage> {
     );
   }
 
-  Widget _buildNutrientSmallCard(String label, String value, String svgPath, Color iconColor) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey.shade200),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SvgPicture.asset(
-                  svgPath,
-                  width: 16,
-                  height: 16,
-                ),
-                const SizedBox(width: 4),
-                Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          ],
-        ),
+Widget _buildNutrientSmallCard(String label, String value, String assetPath) {
+  // Cek apakah filenya berakhiran .svg
+  bool isSvg = assetPath.toLowerCase().endsWith('.svg');
+
+  return Expanded(
+    child: Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.grey.shade200),
       ),
-    );
-  }
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 16,
+                height: 16,
+                child: isSvg 
+                  ? SvgPicture.asset(assetPath) 
+                  : Image.asset(assetPath, fit: BoxFit.contain), // Pakai Image.asset jika bukan SVG
+              ),
+              const SizedBox(width: 4),
+              Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
+            ],
+          ),
+          const SizedBox(height: 5),
+          Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        ],
+      ),
+    ),
+  );
+}
 
   Widget _buildNutritionRow(String label, String value) {
     return Container(
